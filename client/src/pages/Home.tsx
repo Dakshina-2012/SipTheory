@@ -75,6 +75,7 @@ type CheckoutForm = {
 };
 
 const images = {
+  logo: "/manus-storage/siptheory-logo-mark_fc282706.png",
   hero: "/manus-storage/siptheory-hero_16c41010.jpg",
   latte: "/manus-storage/siptheory-latte_4440719a.jpg",
   cappuccino: "/manus-storage/siptheory-cappuccino_bc9f0b61.jpg",
@@ -287,8 +288,7 @@ export default function Home() {
       <header className={`site-nav ${scrolled ? "site-nav-scrolled" : ""}`}>
         <div className="nav-inner">
           <button className="brand-mark" onClick={() => scrollTo("home")} aria-label="SipTheory home">
-            <span className="brand-symbol"><Coffee size={18} strokeWidth={1.7} /></span>
-            <span><strong>Sip</strong>Theory</span>
+            <img className="brand-logo" src={images.logo} alt="SipTheory Coffee & Ideas Cafe & Roastery" />
           </button>
           <nav className={`desktop-links ${mobileOpen ? "mobile-links-open" : ""}`} aria-label="Main navigation">
             {[["Home", "home"], ["Menu", "menu"], ["About", "about"], ["Gallery", "gallery"], ["Reviews", "reviews"], ["Contact", "contact"]].map(([label, id]) => (
