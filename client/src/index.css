@@ -329,6 +329,24 @@ h2 { margin: 18px 0 24px; color: var(--espresso); font-family: var(--display); f
 .button-back:hover { background: var(--card); }
 .checkout-submit { min-width: 0; }
 .checkout-success { margin: 0 29px 20px; display: flex; align-items: center; gap: 7px; color: var(--sage); font-size: 11px; }
+.receipt-card { margin: 0 29px 22px; padding: 19px; border: 1px solid var(--line); border-radius: 8px; background: var(--cream); color: var(--espresso); box-shadow: 0 10px 25px rgba(51, 35, 27, .07); }
+.receipt-top, .receipt-meta, .receipt-customer, .receipt-items > div, .receipt-total, .receipt-payment { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.receipt-top { padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
+.receipt-kicker { display: inline-flex; align-items: center; gap: 5px; color: var(--sage); font-size: 10px; font-weight: 700; }
+.receipt-top > strong { color: var(--caramel); font-size: 10px; letter-spacing: .15em; }
+.receipt-meta { padding: 11px 0; color: var(--muted); font-size: 9px; }
+.receipt-meta b { color: var(--espresso); letter-spacing: .06em; }
+.receipt-customer { align-items: start; flex-direction: column; gap: 2px; padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 11px; }
+.receipt-customer span { color: var(--muted); font-size: 10px; }
+.receipt-items { display: grid; gap: 8px; padding: 13px 0; color: var(--muted); font-size: 10px; }
+.receipt-items strong { color: var(--espresso); font-weight: 600; }
+.receipt-total { padding: 12px 0; border-top: 1px solid var(--line); font-size: 11px; }
+.receipt-total strong { font-size: 16px; }
+.receipt-payment { padding: 10px 0 0; color: var(--muted); font-size: 10px; }
+.receipt-payment strong { color: var(--espresso); }
+.receipt-card p { margin: 18px 0 14px; color: var(--muted); font-size: 10px; line-height: 1.55; text-align: center; }
+.receipt-card p em { color: var(--caramel); font-family: var(--display); font-size: 17px; }
+.receipt-close { width: 100%; border-color: var(--line); padding: 9px 14px; color: var(--espresso); }
 .cart-empty { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
 .empty-cup { display: grid; place-items: center; width: 68px; height: 68px; margin-bottom: 18px; border-radius: 50%; background: var(--card); color: var(--caramel); }
 .cart-empty h3 { margin: 0 0 7px; color: var(--espresso); font-family: var(--display); font-size: 28px; font-weight: 500; }
