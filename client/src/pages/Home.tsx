@@ -6,7 +6,9 @@ import {
   CalendarDays,
   Check,
   ChevronDown,
+  CreditCard as CreditCardIcon,
   Clock3,
+  QrCode as QrCodeIcon,
   Coffee,
   Heart,
   Instagram,
@@ -14,6 +16,7 @@ import {
   Menu as MenuIcon,
   Minus,
   Moon,
+  LockKeyhole as LockIcon,
   Plus,
   Quote,
   Send,
@@ -21,9 +24,11 @@ import {
   ShoppingCart,
   Sparkles,
   Star,
+  Smartphone as SmartphoneIcon,
   Sun,
   UtensilsCrossed,
   Wifi,
+  WalletCards as WalletIcon,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -59,32 +64,47 @@ type ContactForm = {
   message: string;
 };
 
+type CheckoutForm = {
+  name: string;
+  phone: string;
+  pickupTime: string;
+  paymentMethod: "card" | "upi" | "gpay" | "bhim" | "pickup";
+  cardNumber: string;
+  expiry: string;
+  cvc: string;
+};
+
 const images = {
   hero: "/manus-storage/siptheory-hero_16c41010.jpg",
   latte: "/manus-storage/siptheory-latte_4440719a.jpg",
+  cappuccino: "/manus-storage/siptheory-cappuccino_bc9f0b61.jpg",
+  espresso: "/manus-storage/siptheory-espresso_b039a834.jpg",
+  chai: "/manus-storage/siptheory-chai_0fa10fab.jpg",
+  coldbrew: "/manus-storage/siptheory-coldbrew_90fc42a8.jpg",
   sandwich: "/manus-storage/siptheory-sandwich_e0b80dca.jpg",
   dessert: "/manus-storage/siptheory-dessert_19ea252f.jpg",
+  cheesecake: "/manus-storage/siptheory-cheesecake_c4bd4017.jpg",
   interior: "/manus-storage/siptheory-interior_c0c07507.jpg",
 };
 
 const menuItems: MenuItem[] = [
   { id: "signature-latte", name: "Signature Latte", category: "Coffee", description: "Smooth espresso with velvety steamed milk.", price: 220, image: images.latte, tag: "House favourite", vegetarian: true },
-  { id: "cappuccino", name: "Classic Cappuccino", category: "Coffee", description: "Rich espresso balanced with creamy foam.", price: 190, image: images.latte, vegetarian: true },
-  { id: "espresso", name: "Espresso", category: "Coffee", description: "Bold, rich and perfectly extracted.", price: 140, image: images.latte, vegetarian: true },
+  { id: "cappuccino", name: "Classic Cappuccino", category: "Coffee", description: "Rich espresso balanced with creamy foam.", price: 190, image: images.cappuccino, vegetarian: true },
+  { id: "espresso", name: "Espresso", category: "Coffee", description: "Bold, rich and perfectly extracted.", price: 140, image: images.espresso, vegetarian: true },
   { id: "mocha-bliss", name: "Mocha Bliss", category: "Coffee", description: "Chocolate, espresso and silky milk.", price: 240, image: images.dessert, tag: "Comforting", vegetarian: true },
-  { id: "masala-chai", name: "Slow Masala Chai", category: "Tea", description: "Black tea, cardamom, ginger and a little time.", price: 150, image: images.interior, vegetarian: true },
+  { id: "masala-chai", name: "Slow Masala Chai", category: "Tea", description: "Black tea, cardamom, ginger and a little time.", price: 150, image: images.chai, vegetarian: true },
   { id: "hibiscus-tea", name: "Hibiscus Cooler Tea", category: "Tea", description: "Bright hibiscus, citrus peel and wild honey.", price: 180, image: images.interior, vegetarian: true },
-  { id: "iced-americano", name: "Iced Americano", category: "Cold Beverages", description: "Espresso chilled over ice with clean, refreshing notes.", price: 170, image: images.latte, vegetarian: true },
-  { id: "caramel-cold-brew", name: "Caramel Cold Brew", category: "Cold Beverages", description: "Slow-brewed coffee with soft caramel notes.", price: 230, image: images.latte, tag: "Slow brewed", vegetarian: true },
-  { id: "citrus-fizz", name: "Citrus Coffee Fizz", category: "Cold Beverages", description: "Sparkling citrus, espresso and a clean finish.", price: 210, image: images.interior, vegetarian: true },
+  { id: "iced-americano", name: "Iced Americano", category: "Cold Beverages", description: "Espresso chilled over ice with clean, refreshing notes.", price: 170, image: images.coldbrew, vegetarian: true },
+  { id: "caramel-cold-brew", name: "Caramel Cold Brew", category: "Cold Beverages", description: "Slow-brewed coffee with soft caramel notes.", price: 230, image: images.coldbrew, tag: "Slow brewed", vegetarian: true },
+  { id: "citrus-fizz", name: "Citrus Coffee Fizz", category: "Cold Beverages", description: "Sparkling citrus, espresso and a clean finish.", price: 210, image: images.hero, vegetarian: true },
   { id: "paneer-sandwich", name: "Paneer Pesto Sandwich", category: "Fast Food", description: "Grilled sourdough layered with paneer, pesto and greens.", price: 260, image: images.sandwich, tag: "Vegetarian", vegetarian: true },
   { id: "truffle-sandwich", name: "Truffle Grilled Sandwich", category: "Fast Food", description: "Toasted sourdough with creamy truffle filling.", price: 280, image: images.sandwich, vegetarian: true },
-  { id: "mushroom-toast", name: "Pepper Mushroom Toast", category: "Fast Food", description: "Herbed mushrooms, labneh and a warm country loaf.", price: 240, image: images.sandwich, vegetarian: true },
-  { id: "cheesecake", name: "Classic Cheesecake", category: "Desserts", description: "Creamy baked cheesecake with a delicate biscuit base.", price: 220, image: images.dessert, vegetarian: true },
+  { id: "mushroom-toast", name: "Pepper Mushroom Toast", category: "Fast Food", description: "Herbed mushrooms, labneh and a warm country loaf.", price: 240, image: images.interior, vegetarian: true },
+  { id: "cheesecake", name: "Classic Cheesecake", category: "Desserts", description: "Creamy baked cheesecake with a delicate biscuit base.", price: 220, image: images.cheesecake, vegetarian: true },
   { id: "hazelnut-cake", name: "Chocolate Hazelnut Cake", category: "Desserts", description: "Rich chocolate cake with hazelnut cream.", price: 210, image: images.dessert, tag: "Made today", vegetarian: true },
   { id: "seasonal-tart", name: "Seasonal Fruit Tart", category: "Desserts", description: "Buttery pastry, vanilla cream and the day’s fruit.", price: 190, image: images.dessert, vegetarian: true },
-  { id: "rose-cardamom", name: "Rose Cardamom Latte", category: "Signature Specials", description: "Espresso, rose, cardamom and a cloud of milk.", price: 250, image: images.latte, tag: "SipTheory special", vegetarian: true },
-  { id: "tamarind-tonic", name: "Tamarind Espresso Tonic", category: "Signature Specials", description: "A bright, bittersweet tonic with espresso and tamarind.", price: 240, image: images.interior, tag: "New", vegetarian: true },
+  { id: "rose-cardamom", name: "Rose Cardamom Latte", category: "Signature Specials", description: "Espresso, rose, cardamom and a cloud of milk.", price: 250, image: images.chai, tag: "SipTheory special", vegetarian: true },
+  { id: "tamarind-tonic", name: "Tamarind Espresso Tonic", category: "Signature Specials", description: "A bright, bittersweet tonic with espresso and tamarind.", price: 240, image: images.coldbrew, tag: "New", vegetarian: true },
 ];
 
 const categories = ["All", "Coffee", "Tea", "Cold Beverages", "Fast Food", "Desserts", "Signature Specials"];
@@ -102,11 +122,11 @@ const experiences = [
 
 const gallery = [
   { image: images.interior, label: "A room made for lingering", className: "gallery-tall" },
-  { image: images.latte, label: "The daily pour", className: "gallery-square" },
+  { image: images.cappuccino, label: "The daily pour", className: "gallery-square" },
   { image: images.sandwich, label: "Lunch, but slower", className: "gallery-square" },
-  { image: images.dessert, label: "Something sweet", className: "gallery-wide" },
-  { image: images.hero, label: "Sun on the table", className: "gallery-wide" },
-  { image: images.interior, label: "Find your corner", className: "gallery-square" },
+  { image: images.cheesecake, label: "Something sweet", className: "gallery-wide" },
+  { image: images.coldbrew, label: "Sun on the table", className: "gallery-wide" },
+  { image: images.chai, label: "Find your corner", className: "gallery-square" },
 ];
 
 const testimonials = [
@@ -124,6 +144,9 @@ export default function Home() {
   const [menuCategory, setMenuCategory] = useState("All");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+  const [checkout, setCheckout] = useState<CheckoutForm>({ name: "", phone: "", pickupTime: "In 20 minutes", paymentMethod: "card", cardNumber: "", expiry: "", cvc: "" });
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -155,6 +178,7 @@ export default function Home() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setCartOpen(false);
+        setCheckoutOpen(false);
         setGalleryIndex(null);
         setMobileOpen(false);
       }
@@ -195,6 +219,20 @@ export default function Home() {
       const quantity = item.quantity + delta;
       return quantity > 0 ? [{ ...item, quantity }] : [];
     }));
+  };
+
+  const submitCheckout = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!checkout.name.trim() || !/^[+\d][\d\s-]{8,}$/.test(checkout.phone)) {
+      toast.error("Add your full name and a valid phone number to continue.");
+      return;
+    }
+    if (checkout.paymentMethod === "card" && (!checkout.cardNumber || !checkout.expiry || !checkout.cvc)) {
+      toast.error("Add your card details to continue.");
+      return;
+    }
+    setCheckoutSuccess(true);
+    toast.success(checkout.paymentMethod === "pickup" ? "Pickup order placed." : `${checkout.paymentMethod.toUpperCase()} payment selected — secure gateway ready for activation.`);
   };
 
   const validateBooking = () => {
@@ -362,7 +400,8 @@ export default function Home() {
 
       <footer className="footer"><div className="container footer-top"><div className="footer-brand"><button className="brand-mark brand-mark-footer" onClick={() => scrollTo("home")}><span className="brand-symbol"><Coffee size={18} strokeWidth={1.7} /></span><span><strong>Sip</strong>Theory</span></button><p>Where every sip<br />tells a story.</p></div><div className="footer-column"><span className="footer-label">Explore</span><button onClick={() => scrollTo("home")}>Home</button><button onClick={() => scrollTo("menu")}>Menu</button><button onClick={() => scrollTo("about")}>About</button><button onClick={() => scrollTo("gallery")}>Gallery</button></div><div className="footer-column"><span className="footer-label">Visit</span><button onClick={() => scrollTo("contact")}>Location</button><button onClick={() => scrollTo("contact")}>Opening hours</button><button onClick={() => scrollTo("reserve")}>Reservations</button><a href="mailto:hello@siptheory.com">Email us</a></div><div className="footer-column footer-signup"><span className="footer-label">Stay in the loop</span><p>New drinks, good news, occasional crumbs.</p><div className="email-capture"><input placeholder="Your email address" aria-label="Email address" /><button onClick={() => toast.success("You’re on the list — welcome to SipTheory.")} aria-label="Subscribe"><ArrowRight size={16} /></button></div></div></div><div className="container footer-bottom"><span>© 2026 SipTheory Cafe</span><span>Made for slow mornings & good company.</span><span><button onClick={() => toast("Privacy policy coming soon.")}>Privacy</button><button onClick={() => toast("Terms & conditions coming soon.")}>Terms</button></span></div></footer>
 
-      {cartOpen && <div className="modal-layer" onClick={() => setCartOpen(false)}><aside className="cart-drawer" onClick={(event) => event.stopPropagation()} aria-label="Your order"><div className="drawer-header"><div><span className="drawer-kicker">SipTheory takeaway</span><h2>Your order <span>({cartCount})</span></h2></div><button className="icon-button" onClick={() => setCartOpen(false)} aria-label="Close cart"><X size={20} /></button></div>{cart.length === 0 ? <div className="cart-empty"><span className="empty-cup"><Coffee size={29} /></span><h3>Your order is waiting.</h3><p>Add something lovely from the menu and it’ll appear here.</p><button className="button button-dark" onClick={() => { setCartOpen(false); scrollTo("menu"); }}>Browse the menu <ArrowRight size={16} /></button></div> : <><div className="cart-items">{cart.map((item) => <div className="cart-line" key={item.id}><img src={item.image} alt="" /><div className="cart-line-main"><div><strong>{item.name}</strong><span>₹{item.price}</span></div><div className="quantity-control"><button onClick={() => updateQuantity(item.id, -1)} aria-label={`Decrease ${item.name}`}><Minus size={13} /></button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.id, 1)} aria-label={`Increase ${item.name}`}><Plus size={13} /></button></div></div></div>)}</div><div className="cart-summary"><div><span>Subtotal</span><span>₹{subtotal}</span></div><div><span>Taxes (5%)</span><span>₹{tax}</span></div><div className="cart-total"><strong>Total</strong><strong>₹{total}</strong></div><button className="button button-dark full-button" onClick={() => toast("Demo checkout — payments are not connected yet.")}>Proceed to checkout <ArrowRight size={16} /></button><button className="continue-link" onClick={() => setCartOpen(false)}>Continue browsing</button><p className="checkout-note">Prototype checkout only. No payment is processed.</p></div></>}</aside></div>}
+      {cartOpen && <div className="modal-layer" onClick={() => setCartOpen(false)}><aside className="cart-drawer" onClick={(event) => event.stopPropagation()} aria-label="Your order"><div className="drawer-header"><div><span className="drawer-kicker">SipTheory takeaway</span><h2>Your order <span>{cartCount} delicious {cartCount === 1 ? "choice" : "choices"}</span></h2></div><button className="icon-button" onClick={() => setCartOpen(false)} aria-label="Close cart"><X size={20} /></button></div>{cart.length === 0 ? <div className="cart-empty"><span className="empty-cup"><Coffee size={29} /></span><h3>Your order is waiting.</h3><p>Add something lovely from the menu and it’ll appear here.</p><button className="button button-dark" onClick={() => { setCartOpen(false); scrollTo("menu"); }}>Browse the menu <ArrowRight size={16} /></button></div> : <><div className="cart-items">{cart.map((item) => <div className="cart-line" key={item.id}><img src={item.image} alt="" /><div className="cart-line-main"><div><strong>{item.name}</strong><span>₹{item.price}</span></div><div className="quantity-control"><button onClick={() => updateQuantity(item.id, -1)} aria-label={`Decrease ${item.name}`}><Minus size={13} /></button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.id, 1)} aria-label={`Increase ${item.name}`}><Plus size={13} /></button></div></div></div>)}</div><div className="cart-summary"><div><span>Subtotal</span><span>₹{subtotal}</span></div><div><span>Taxes (5%)</span><span>₹{tax}</span></div><div className="cart-total"><strong>Total</strong><strong>₹{total}</strong></div><button className="button button-dark full-button" onClick={() => { setCartOpen(false); setCheckoutOpen(true); setCheckoutSuccess(false); }}>Proceed to checkout <ArrowRight size={16} /></button><button className="continue-link" onClick={() => setCartOpen(false)}>Continue browsing</button><p className="checkout-note">Choose card payment or pay at pickup.</p></div></>}</aside></div>}
+      {checkoutOpen && <div className="modal-layer" onClick={() => setCheckoutOpen(false)}><form className="cart-drawer checkout-drawer" onClick={(event) => event.stopPropagation()} onSubmit={submitCheckout} noValidate><div className="drawer-header"><div><span className="drawer-kicker">SipTheory takeaway</span><h2>Your order <span>{cartCount} delicious {cartCount === 1 ? "choice" : "choices"}</span></h2></div><button type="button" className="icon-button" onClick={() => setCheckoutOpen(false)} aria-label="Close checkout"><X size={20} /></button></div><div className="checkout-scroll"><div className="checkout-fields"><Field label="Full name"><input required value={checkout.name} onChange={(event) => setCheckout({ ...checkout, name: event.target.value })} placeholder="Your full name" autoComplete="name" /></Field><Field label="Phone number"><input required value={checkout.phone} onChange={(event) => setCheckout({ ...checkout, phone: event.target.value })} placeholder="Your phone number" autoComplete="tel" /></Field><Field label="Pickup time"><select value={checkout.pickupTime} onChange={(event) => setCheckout({ ...checkout, pickupTime: event.target.value })}><option>In 20 minutes</option><option>In 30 minutes</option><option>In 45 minutes</option><option>Schedule for later</option></select></Field></div><div className="payment-choice"><span className="checkout-label">Payment</span><div className="payment-options"><button type="button" className={checkout.paymentMethod === "card" ? "payment-option active" : "payment-option"} onClick={() => setCheckout({ ...checkout, paymentMethod: "card" })}><span className="payment-card-icon"><CreditCardIcon /></span><span><strong>Card</strong><small>Visa · Mastercard · RuPay</small></span><span className="radio-dot" /></button><button type="button" className={checkout.paymentMethod === "upi" ? "payment-option active" : "payment-option"} onClick={() => setCheckout({ ...checkout, paymentMethod: "upi" })}><span className="payment-card-icon"><QrCodeIcon /></span><span><strong>UPI</strong><small>Any UPI ID or app</small></span><span className="radio-dot" /></button><button type="button" className={checkout.paymentMethod === "gpay" ? "payment-option active" : "payment-option"} onClick={() => setCheckout({ ...checkout, paymentMethod: "gpay" })}><span className="payment-card-icon"><WalletIcon /></span><span><strong>Google Pay</strong><small>Fast checkout with GPay</small></span><span className="radio-dot" /></button><button type="button" className={checkout.paymentMethod === "bhim" ? "payment-option active" : "payment-option"} onClick={() => setCheckout({ ...checkout, paymentMethod: "bhim" })}><span className="payment-card-icon"><SmartphoneIcon /></span><span><strong>BHIM</strong><small>Pay securely with BHIM UPI</small></span><span className="radio-dot" /></button><button type="button" className={checkout.paymentMethod === "pickup" ? "payment-option active" : "payment-option"} onClick={() => setCheckout({ ...checkout, paymentMethod: "pickup" })}><span className="payment-card-icon"><ShoppingBag size={17} /></span><span><strong>Pay at pickup</strong><small>Cash or card at counter</small></span><span className="radio-dot" /></button></div></div>{checkout.paymentMethod === "card" && <div className="card-fields"><div className="card-brand-row"><span className="checkout-label">Card details</span><span className="card-badges">VISA · Mastercard · UPI</span></div><Field label="Card number"><input inputMode="numeric" value={checkout.cardNumber} onChange={(event) => setCheckout({ ...checkout, cardNumber: event.target.value })} placeholder="1234 1234 1234 1234" autoComplete="cc-number" /></Field><div className="card-fields-row"><Field label="Expiry"><input value={checkout.expiry} onChange={(event) => setCheckout({ ...checkout, expiry: event.target.value })} placeholder="MM / YY" autoComplete="cc-exp" /></Field><Field label="CVC"><input inputMode="numeric" value={checkout.cvc} onChange={(event) => setCheckout({ ...checkout, cvc: event.target.value })} placeholder="123" autoComplete="cc-csc" /></Field></div><p className="secure-payment-note"><LockIcon /> Secure payment powered by Stripe when connected.</p></div>}{checkout.paymentMethod === "pickup" && <div className="pickup-note">Payment is made at pickup. No online payment will be processed.</div>}<div className="checkout-divider" /><div className="cart-summary checkout-summary"><div><span>Subtotal</span><span>₹{subtotal}</span></div><div><span>Taxes (5%)</span><span>₹{tax}</span></div><div className="cart-total"><strong>Total</strong><strong>₹{total}</strong></div></div></div><div className="checkout-actions"><button type="button" className="button button-back" onClick={() => { setCheckoutOpen(false); setCartOpen(true); }}>Back</button><button className="button button-dark checkout-submit" type="submit">{checkout.paymentMethod === "pickup" ? "Place pickup order" : `Pay ₹${total}`} <ArrowRight size={16} /></button></div>{checkoutSuccess && <div className="checkout-success"><Check size={16} /> {checkout.paymentMethod === "card" ? "Checkout is ready for secure payment activation." : "Your pickup request has been received."}</div>}</form></div>}
       {galleryIndex !== null && <div className="modal-layer lightbox-layer" onClick={() => setGalleryIndex(null)}><div className="lightbox" onClick={(event) => event.stopPropagation()}><button className="lightbox-close icon-button" onClick={() => setGalleryIndex(null)} aria-label="Close gallery"><X size={21} /></button><img src={gallery[galleryIndex].image} alt={gallery[galleryIndex].label} /><div className="lightbox-caption"><span>{gallery[galleryIndex].label}</span><span>{String(galleryIndex + 1).padStart(2, "0")} / {String(gallery.length).padStart(2, "0")}</span></div></div></div>}
     </div>
   );
