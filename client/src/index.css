@@ -346,7 +346,9 @@ h2 { margin: 18px 0 24px; color: var(--espresso); font-family: var(--display); f
 .receipt-payment strong { color: var(--espresso); }
 .receipt-card p { margin: 18px 0 14px; color: var(--muted); font-size: 10px; line-height: 1.55; text-align: center; }
 .receipt-card p em { color: var(--caramel); font-family: var(--display); font-size: 17px; }
-.receipt-close { width: 100%; border-color: var(--line); padding: 9px 14px; color: var(--espresso); }
+.receipt-actions { display: grid; grid-template-columns: 1fr 72px; gap: 8px; }
+.receipt-download, .receipt-close { width: 100%; padding: 9px 11px; }
+.receipt-close { border-color: var(--line); color: var(--espresso); }
 .cart-empty { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
 .empty-cup { display: grid; place-items: center; width: 68px; height: 68px; margin-bottom: 18px; border-radius: 50%; background: var(--card); color: var(--caramel); }
 .cart-empty h3 { margin: 0 0 7px; color: var(--espresso); font-family: var(--display); font-size: 28px; font-weight: 500; }
