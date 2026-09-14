@@ -286,7 +286,7 @@ h2 { margin: 18px 0 24px; color: var(--espresso); font-family: var(--display); f
 .drawer-kicker { color: var(--caramel); font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
 .drawer-header h2 { margin: 8px 0 0; font-family: var(--display); font-size: 32px; letter-spacing: -.05em; }
 .drawer-header h2 span { color: var(--muted); font-family: var(--sans); font-size: 12px; letter-spacing: 0; }
-.cart-items { flex: 1; overflow-y: auto; padding: 16px 29px; }
+.cart-items { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 16px 29px; }
 .cart-line { display: flex; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--line); }
 .cart-line img { width: 64px; height: 64px; object-fit: cover; }
 .cart-line-main { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 7px; }
@@ -302,7 +302,7 @@ h2 { margin: 18px 0 24px; color: var(--espresso); font-family: var(--display); f
 .continue-link { display: block; margin: 14px auto 0; border: 0; background: none; color: var(--espresso); font-size: 11px; font-weight: 700; }
 .checkout-note { margin: 16px 0 0; color: var(--muted); font-size: 9px; text-align: center; }
 .checkout-drawer { background: var(--cream-2); }
-.checkout-scroll { flex: 1; overflow-y: auto; padding: 24px 29px 12px; }
+.checkout-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 24px 29px 12px; }
 .checkout-fields { display: grid; gap: 19px; }
 .checkout-label { display: block; margin-bottom: 9px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .payment-choice { margin-top: 26px; }
