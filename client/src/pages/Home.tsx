@@ -74,18 +74,19 @@ type CheckoutForm = {
   cvc: string;
 };
 
+const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`;
 const images = {
-  logo: "/manus-storage/siptheory-logo-mark_fc282706.png",
-  hero: "/manus-storage/siptheory-hero_9c4050f6.webp",
-  latte: "/manus-storage/siptheory-latte_9337f86b.webp",
-  cappuccino: "/manus-storage/siptheory-cappuccino_cc69ccfb.webp",
-  espresso: "/manus-storage/siptheory-espresso_d565859e.webp",
-  chai: "/manus-storage/siptheory-chai_8d7325e1.webp",
-  coldbrew: "/manus-storage/siptheory-coldbrew_aa7d3473.webp",
-  sandwich: "/manus-storage/siptheory-sandwich_ee961128.webp",
-  dessert: "/manus-storage/siptheory-dessert_da3913e1.webp",
-  cheesecake: "/manus-storage/siptheory-cheesecake_ea016dab.webp",
-  interior: "/manus-storage/siptheory-interior_b4a0e8bc.webp",
+  logo: asset("siptheory-logo-mark.png"),
+  hero: asset("siptheory-hero.webp"),
+  latte: asset("siptheory-latte.webp"),
+  cappuccino: asset("siptheory-cappuccino.webp"),
+  espresso: asset("siptheory-espresso.webp"),
+  chai: asset("siptheory-chai.webp"),
+  coldbrew: asset("siptheory-coldbrew.webp"),
+  sandwich: asset("siptheory-sandwich.webp"),
+  dessert: asset("siptheory-dessert.webp"),
+  cheesecake: asset("siptheory-cheesecake.webp"),
+  interior: asset("siptheory-interior.webp"),
 };
 
 const menuItems: MenuItem[] = [
